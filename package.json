@@ -1,0 +1,32 @@
+{
+  "name": "365",
+  "version": "1.0.0",
+  "description": "365 days",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carbogninalberto/365.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carbogninalberto/365/issues"
+  },
+  "homepage": "https://github.com/carbogninalberto/365#readme",
+  "dependencies": {
+    "bulma": "^0.6.1",
+    "client-sessions": "^0.8.0",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "fs": "0.0.1-security",
+    "md5": "^2.2.1",
+    "mdi": "^2.1.19",
+    "mysql": "^2.15.0",
+    "node-mysql": "^0.4.2",
+    "session": "^0.1.0",
+    "url": "^0.11.0"
+  }
+}

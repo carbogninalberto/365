@@ -1,0 +1,13 @@
+#coffee {
+    background: url('../img/bg.jpg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#edit-title {
+    visibility: hidden;
+}
+#mantra:hover #edit-title {
+    visibility: visible;
+}
