@@ -1,11 +1,11 @@
 var url = require('url');
 var fs = require('fs');
-
+/*
 exports.index = require(__dirname + "/index/index.js");
 exports.login = require(__dirname + "/login/login.js");
 exports.days = require(__dirname + "/days/days.js");
 exports.targets = require(__dirname + "/targets/targets.js");
-
+*/
 exports.init = function init(app) {
     app.all("/img/*", function (req, res) {
         var q = url.parse(req.url, true);

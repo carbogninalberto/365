@@ -22,17 +22,27 @@ exports.readTable = function readTable(name, callback) {
 
 exports.login = function login(email, password, callback) {
     var pass_md5 = md5(password);
-    con.query("SELECT password FROM users WHERE email='" + email +"'", function (err, result, fields) {
-        if (err) throw err;
-        console.log(result);
-        console.log(pass_md5);
-        //var res = JSON.stringify(result[0].password);
-        console.log(result[0].password);
-        if (result[0].password == pass_md5) {
-            console.log("connected");
-        } else {
-            console.log("wrong username or password");
-        }
 
+    return new Promise(function (resolve, reject) {
+
+        con.query("SELECT password FROM users WHERE email='" + email + "'", function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+            console.log(pass_md5);
+            //var res = JSON.stringify(result[0].password);
+            console.log(result[0].password);
+            if (result[0].password == pass_md5) {
+                console.log("connected");
+                resolve(true);
+            } else {
+                console.log("wrong username or password");
+                resolve(false);
+            }
+
+        });
     });
+
+
+    
+    
 };

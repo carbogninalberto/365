@@ -11,3 +11,8 @@
 #mantra:hover #edit-title {
     visibility: visible;
 }
+#targets {
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    margin: 5px;
+}

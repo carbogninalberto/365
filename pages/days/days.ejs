@@ -1,49 +1,11 @@
 ﻿<!DOCTYPE html>
 
 <html class="has-navbar-fixed-top" lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>365</title>
-</head>
+<% include ../parts/header %>
 <body>
 
-    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="/">
-                <img src="img/target.png" />
-                <p class="is-small" style="padding-left:10px">
-                    Stay <strong>Focused</strong>!
-                </p>
-            </a>
+    <% include ../parts/menu_func %>
 
-            <div class="navbar-item">
-                <a class="button is-info" href="/targets">
-                    <i class="mdi mdi-24px mdi-bullseye"></i>
-                </a>
-                <a class="button is-info" href="/days" style="margin-left:10px;">
-                    <i class="mdi mdi-24px mdi-calendar-text"></i>
-                </a>
-                <a class="button is-info" style="margin-left:10px;">
-                    <i class="mdi mdi-24px mdi-account"></i>
-                </a>
-            </div>
-
-        </div>
-
-        <div class="navbar-menu">
-
-            <div class="navbar-end">
-                <div class="navbar-item">
-                    <span class="button is-warning " style="margin-left:10px;cursor:default;color: white;">600 <i class="mdi mdi-24px mdi-cash"></i></span>
-                </div>
-            </div>
-        </div>
-    </nav>
     <section class="section" style="text-align:center;background-color: #f1f1f1;">
         <div class="tabs is-centered">
             <ul>
@@ -160,6 +122,8 @@
         
 
     </section>
+    
+    <% include ../parts/footer %>    
 
 </body>
 </html>
