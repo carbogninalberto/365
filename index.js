@@ -22,6 +22,7 @@ var page = require(__dirname + "/pages/pages.js");
 //==================== Server ====================
 //handle get
 //pages
+/*
 app.get('/targets', function (req, res) {
     if (req.session.user.email) {
         page.targets.send_page(req, res);
@@ -42,12 +43,14 @@ app.get('/profile', function (req, res) {
     } else {
         page.login.send_page(req, res);
     }
-});
+}); */
 
 
 //functionalities
 app.get("/", page.index.send_page);
 app.get("/login", page.login.send_page);
+app.get("/targets", page.targets.send_page);
+app.get("/days", page.days.send_page);
 
 
 page.init(app);

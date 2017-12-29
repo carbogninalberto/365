@@ -26,5 +26,13 @@ exports.login = function login(email, password, callback) {
         if (err) throw err;
         console.log(result);
         console.log(pass_md5);
+        //var res = JSON.stringify(result[0].password);
+        console.log(result[0].password);
+        if (result[0].password == pass_md5) {
+            console.log("connected");
+        } else {
+            console.log("wrong username or password");
+        }
+
     });
 };
