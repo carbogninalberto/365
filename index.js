@@ -43,11 +43,11 @@ app.get('/days', function (req, res) {
     }
     
 });
-app.get('/targets', function (req, res) {
+app.get('/goals', function (req, res) {
     if ((req.session.tmp_email == undefined) && (req.session.tmp_pass == undefined)) {
         res.render('../pages/login/login');
     } else {
-        res.render('../pages/targets/targets');
+        res.render('../pages/goals/goals');
     }
     
 });
@@ -65,7 +65,7 @@ app.post('/checkAuth', function (req, res) {
                 req.session.tmp_pass = pwd;
                 console.log("authChecked OK! COOKIE CREATED!");
                 console.log(req.session.tmp_email + "      " + email);
-                res.render('../pages/targets/targets', { data: 1 });
+                res.render('../pages/goals/goals', { data: 1 });
             } else {
                 res.render('../pages/login/login', { data: 1 });
             }
@@ -77,7 +77,7 @@ app.post('/checkAuth', function (req, res) {
         db.login(email, pwd).then(function (result) {
             if (result) {
                 console.log("authChecked OK!");
-                res.render('../pages/targets/targets', { data: 1 });
+                res.render('../pages/goals/goals', { data: 1 });
             } else {
                 req.session.tmp_email = undefined;
                 req.session.tmp_pass = undefined;

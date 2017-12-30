@@ -41,8 +41,11 @@ exports.login = function login(email, password, callback) {
 
         });
     });
-
-
-    
-    
 };
+
+exports.addTarget = function addTarget(title, mantra, email, column) {
+
+
+
+};
+

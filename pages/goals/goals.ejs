@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+
+<html class="has-navbar-fixed-top" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+ <% include ../parts/header %>
+<body>
+    <% include ../parts/menu_func %>
+
+    <section class="section" style="text-align:center;background-color: #f1f1f1;"  ng-cloak ng-app="mindlyGroup" ng-controller="MainCtrl">
+
+            <h1 id="mantra" class="title" style="font-size: 60px;" child-scope>
+                 <span ng-cloak ng-hide="editing" ng-click="editing = true">
+                    {{user.mantra}}
+                  </span>
+                  <span ng-cloak ng-show="editing">
+                    <input class="input is-large" type="text" ng-model="user.mantra" value="{{user.mantra}}" style="width:250px;"> 
+                    
+                    <a class="button is-success" ng-click="editing = false">
+                        <span class="icon is-small">
+                            <i class="fa fa-check"></i>
+                        </span>
+                        <span>Save</span>
+                    </a>
+                </span>
+            </h1>
+
+        <div class="columns">
+            <div class="column"  id="targets">
+                <h2>
+                    <strong> OBIETTIVI PRINCIPALI</strong><br>
+                    <a class="button is-warning is-small" ng-click="toggleModal()">
+                           <i class="mdi mdi-18px mdi-plus-box"></i>
+                    </a>
+                    <form id="login-form-query" style="width:300px;float:right" action="/goals" method="get">
+                        <div class="modal" ng-class="isactive">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                <header class="modal-card-head">
+                                    <p class="modal-card-title">Aggiungi Obiettivo Annuale</p>
+                                    <button class="delete" aria-label="close" ng-click="toggleModal()"></button>
+                                </header>
+                                <section class="modal-card-body">
+
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                        <label class="label">Obiettivo</label>
+                                        </div>
+                                        <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name="titolo" class="input" type="text" placeholder="Titolo">
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name = "mantra" class="input" type="text" placeholder="#Mantra">
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <article class="message is-info">
+                                        <div class="message-header">
+                                        <p>Attenzione</p>
+                                        </div>
+                                        <div class="message-body">
+                                        Un esempio di <strong>OUTPUT</strong> corretto è:
+                                            [Studiare] [30] [pagine] [al giorno].
+                                        </div>
+                                    </article>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                        <label class="label">Output</label>
+                                        </div>
+                                        <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name="azione" class="input" type="text" placeholder="Azione">
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name="quantita" class="input" type="number" placeholder="Quantità">
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="field is-horizontal">
+                                        <div class="field-label is-normal">
+                                        <label class="label"></label>
+                                        </div>
+                                        <div class="field-body">
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name="unita" class="input" type="text" placeholder="Unità di misura">
+                                            </p>
+                                        </div>
+                                        <div class="field">
+                                            <p class="control is-expanded">
+                                            <input name="tempo" class="input" type="text" placeholder="Tempo">
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </div>
+                               
+
+
+                                
+
+
+                                </section>
+                                <footer class="modal-card-foot">
+                                    <button class="button is-success" ng-click="saveYearGoals()">Save changes</button>
+                                    <button class="button" ng-click="toggleModal()">Cancel</button>
+                                </footer>
+                                </div>
+                            </div>
+                        </form>
+
+
+                </h2>
+
+                <div id="mantra" class="tile is-parent">
+                    <article id="draggable" class="tile is-child notification is-info" style="cursor:pointer;">
+                        <!--<button class="delete" aria-label="close" ng-click="deleteTarget()" style="margin:5px"></button>-->
+
+                        <p class="title">Palestra & Dieta</p>
+
+                        <div class="content">
+                            <p class="subtitle">#CostanzaNoPanza</p>
+                        </div>
+                    </article>
+                </div>
+                
+
+            </div>
+            <div class="column" id="targets">
+                <h2>
+                    <strong>OBIETTIVI ANNUALI</strong><br>
+                    <a class="button is-warning is-small" href="/targets">
+                        <i class="mdi mdi-18px mdi-plus-box"></i>
+                    </a>
+                </h2>
+            </div>
+            <div class="column" id="targets">
+                <h2>
+                    <strong>LIBRI</strong><br>
+                    <a class="button is-warning is-small" href="/targets">
+                        <i class="mdi mdi-18px mdi-plus-box"></i>
+                    </a>
+                </h2>
+            </div>
+        </div>
+
+    </section>
+    
+    <% include ../parts/footer %>
+
+    <script>
+        var app = angular.module('mindlyGroup', []);
+
+        app.controller('MainCtrl', function($scope) {
+          $scope.user = {mantra:'#MANTRA', last:'Smith'};
+          $scope.isactive = 'modal';
+          $scope.toggleModal = function(){
+            if ($scope.isactive === 'modal is-active')
+              $scope.isactive = "modal";
+            else
+              $scope.isactive = "modal is-active";
+          };
+        })
+        .directive('childScope', function() {
+          return { scope: true, restrict:'AE' }
+        });
+    </script>
+
+</body>
+</html>
