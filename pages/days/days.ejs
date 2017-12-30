@@ -5,125 +5,232 @@
 <body>
 
     <% include ../parts/menu_func %>
+    <section class="section" style="text-align:center;background-color: #f1f1f1;" ng-cloak ng-app="mindlyGroup" ng-controller="MainCtrl">
+        <div class="columns custom-columns">
+            <div class="column">
+                <a>
+                    <span class="icon is-small "><i class="fa fa-globe"></i></span>
+                    <span>MasterMind Flows</span>
+                </a>
+                <div id="targets" style="padding:20px">
 
-    <section class="section" style="text-align:center;background-color: #f1f1f1;">
-        <div class="tabs is-centered">
-            <ul>
-                <li class="is-active">
-                    <a>
-                        <span class="icon is-small"><i class="fa fa-globe"></i></span>
-                        <span>Flusso Gruppo</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="icon is-small"><i class="fa fa-sticky-note"></i></span>
-                        <span>Diario</span>
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <span class="icon is-small"><i class="fa fa-area-chart"></i></span>
-                        <span>Statistiche</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
 
-        <article class="media">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/128x128.png">
-                </p>
-            </figure>
-            <div class="media-content">
-                <div class="content">
-                    <p>
-                        <strong>Alberto Carbognin</strong> <small>@shythappens</small> <small>31m</small>
-                        <br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-                    </p>
-                </div>
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-reply"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-retweet"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-heart"></i></span>
-                        </a>
-                    </div>
-                </nav>
-            </div>
-            <div class="media-right">
-                <button class="delete"></button>
-            </div>
-        </article>
+                    <% for (var i=data.flow.length-1; i >= 0; i--) {
+                    var d = new Date(data.flow[i].datetime);
+                    var parts = data.flow[i].datetime.toString().split(' ');
+                    //console.log(parts);
+                    var timeStamp = parts[2] + " " + parts[1] + " " + parts[3];
+                    //var timeStamp = d.getTime();
+                    %>
 
-        <article class="media">
-            <figure class="media-left">
-                <p class="image is-64x64">
-                    <img src="https://bulma.io/images/placeholders/128x128.png">
-                </p>
-            </figure>
-            <div class="media-content">
-                <div class="content">
-                    <p>
-                        <strong>Michele Tessari</strong> <small>@youclose</small> <small>31m</small>
-                        <br>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
-                    </p>
-                </div>
-                <nav class="level is-mobile">
-                    <div class="level-left">
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-reply"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-retweet"></i></span>
-                        </a>
-                        <a class="level-item">
-                            <span class="icon is-small"><i class="fa fa-heart"></i></span>
-                        </a>
-                    </div>
-                </nav>
 
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-48x48">
-                            <img src="https://bulma.io/images/placeholders/96x96.png">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <strong>Alberto Carbognin</strong>
-                                <br>
-                                Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                                <br>
-                                <small><a>Reply</a> · 2 hrs</small>
+                    <article class="media">
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img src="https://bulma.io/images/placeholders/128x128.png">
                             </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content">
+                                <p style="margin: 0px;">
+                                    <strong><%= data.flow[i].nome + " "+ data.flow[i].cognome %> </strong><br />
+                                    <small id="small-date">@<%= data.flow[i].username %></small>
+                                    <small id="small-date"><%= parts[4] +" · " %> </small>
+                                    <small id="small-date"><%= timeStamp %></small>
+<p>
+                                    <%- data.flow[i].contenuto %>
+                                </p>
+
+                                <div class="field is-grouped is-grouped-multiline">
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag">Obiettivo</span>
+                                            <span class="tag is-link "> <%= data.flow[i].titolo %></span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag"><%= data.flow[i].unita %></span>
+                                            <span class="tag is-link"> <%= data.flow[i].quantita %></span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag">Completata</span>
+                                            <span class="tag is-<%= (data.flow[i].completato) ? 'success' : 'danger' %>"> <%= (data.flow[i].completato) ? 'sì' : 'no' %></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag"><i class="fa fa-gg-circle"></i></span>
+                                            <span class="tag is-warning"> <%= (data.flow[i].completato) ? '+10' : '0' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </p>
+                            </div>
+                            <!--<nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item">
+                        soon
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fa fa-comment"></i></span>
+                    </a>
+                </div>
+            </nav>-->
                         </div>
-                    </div>
-                </article>
+                    </article>
+                    <% } %>
 
-            </div>
-            <div class="media-right">
-                <button class="delete"></button>
-            </div>
 
+                </div>
+            </div>
             
+            <div class="column">
+                <a>
+                    <span class="icon is-small"><i class="fa fa-circle"></i></span>
+                    <span>Create Flow</span>
+                </a>
+                <div id="targets" style="padding:30px">
+                    <article class="media">
+                        
+                      <figure class="media-left">
+                        <p class="image is-64x64">
+                          <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                      </figure>
+                      <div class="media-content">
+                          <form id="flow" action="/days" method="get">
+                              <div class="field is-horizontal" style="width:100%;">
+                                  <div class="field-body is-normal">
+                                      <label class="label">Assegna a:</label>
+                                  </div>
+                                  <div class="field-body" style="width:100%;">
+                                      <div class="select" style="width:100%;">
 
-        </article>
+                                          <select form="flow" ng-model="selectedGoal" ng-init="selectedGoal" style="width:100%;">
 
-        
+                                              <option selected="" value="">Seleziona Obiettivo</option>
+                                              <% for (var i=0; i < data.year.length; i++) { %>
+                                              <option value="<%=data.year[i].id%>"><%= data.year[i].titolo %></option>
+                                              <% } %>
+                                              <% for (var i=0; i < data.secondary.length; i++) { %>
+                                              <option value="<%=data.secondary[i].id%>"><%= data.secondary[i].titolo %></option>
+                                              <% } %>
+                                          </select>
+                                          <input name="goal" value="{{selectedGoal}}" type="hidden" />
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="field is-horizontal">
+                                  <div class="field-body is-normal">
+                                      <label class="label">Output del giorno:</label>
+                                  </div>
+                                  <div class="field-body">
+                                      <div class="field has-addons">
+                                          <p class="control">
+                                              <input name="quantita" class="input" type="number" placeholder="Quantità">
+                                          </p>
+                                          <p class="control">
+                                              <a class="button is-static">
+                                                  unità
+                                              </a>
+                                          </p>
+                                      </div>
 
+                                  </div>
+                              </div>
+
+
+                              <div class="field is-horizontal">
+                                  <div class="field-body is-normal">
+                                      <label class="label">Hai completato l'OUTPUT del giorno?</label>
+                                  </div>
+                                  <div class="field-body" style="margin:10px;">
+                                      <label class="radio">
+                                          <input type="radio" name="answer" value="1">
+                                          Sì
+                                      </label>
+                                      <label class="radio">
+                                          <input type="radio" name="answer" value="0">
+                                          No
+                                      </label>
+                                  </div>
+                              </div>
+
+
+                              <div class="field">
+                                  <p class="control">
+
+                                      <textarea id="textarea" ng-model="noteArea" form="flow" class="textarea" placeholder="Aggiungi Commento..."></textarea>
+                                      <input name="note" value="{{noteArea}}" type="hidden" />
+                                  </p>
+                              </div>
+                              <nav class="level">
+                                  <div class="level-left">
+                                      <div class="level-item">
+                                          <button class="button is-info">Pubblica</button>
+
+                                      </div>
+                                  </div>
+                                  <div class="level-right">
+                                      I dati non saranno modificabili.
+                                  </div>
+                              </nav>
+                          </form>
+
+                    </article>
+                </div>
+            </div>
+        </div>
     </section>
     
+    
     <% include ../parts/footer %>    
+
+    
+    <script>
+        
+        var app = angular.module('mindlyGroup', []);
+
+        app.controller('MainCtrl', function ($scope) {
+            $scope.user = {mantra:'#MANTRA', last:'Smith'};
+            $scope.isactive = 'modal';
+            $scope.isactiveSecondary = 'modal';
+            $scope.isactiveBooks = 'modal';
+            $scope.toggleModal = function(){
+            if ($scope.isactive === 'modal is-active')
+                $scope.isactive = "modal";
+            else
+                $scope.isactive = "modal is-active";
+            };
+            $scope.toggleModalSecondary = function () {
+                if ($scope.isactiveSecondary === 'modal is-active')
+                    $scope.isactiveSecondary = "modal";
+                else
+                    $scope.isactiveSecondary = "modal is-active";
+            };
+            $scope.toggleModalBooks = function () {
+                if ($scope.isactiveBooks === 'modal is-active')
+                    $scope.isactiveBooks = "modal";
+                else
+                    $scope.isactiveBooks = "modal is-active";
+            };
+            $scope.toggleModal = function () {
+                if ($scope.isactive === 'modal is-active')
+                    $scope.isactive = "modal";
+                else
+                    $scope.isactive = "modal is-active";
+            };
+            
+        })
+        .directive('childScope', function() {
+          return { scope: true, restrict:'AE' }
+        });
+    </script>
 
 </body>
 </html>

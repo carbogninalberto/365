@@ -14,8 +14,8 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 })); 
 
-app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.urlencoded()); // to support URL-encoded bodies
+//app.use(express.json());       // to support JSON-encoded bodies
+//app.use(express.urlencoded()); // to support URL-encoded bodies
 
 app.use(sessions({
     cookieName: 'session', // cookie name dictates the key name added to the request object
@@ -40,7 +40,33 @@ app.get('/days', function (req, res) {
     if ((req.session.tmp_email == undefined) && (req.session.tmp_pass == undefined)) {
         res.render('../pages/login/login');
     } else {
-        res.render('../pages/days/days');
+        var query = qs.parse(url.parse(req.url).query);
+        var data;
+        db.getTarget('year', req.session.tmp_email).then(function (year) {
+            db.getTarget('secondary', req.session.tmp_email).then(function (secondary) {
+                db.getTarget('book', req.session.tmp_email).then(function (books) {
+                    db.joinedTarget(req.session.tmp_email).then(function (odata) {
+                        db.joinedFlow(req.session.group, req.session.tmp_email).then(function (flow) {
+                            data = {
+                                flow: flow,
+                                outputdata: odata,
+                                year: year,
+                                secondary: secondary,
+                                books: books,
+                                query: query
+                            }
+                            if (query.answer != undefined) {
+                                db.insertFlow({ query: query, group: req.session.group}, req.session.tmp_email);
+                                res.redirect('/days');
+                            } else {
+                                //console.log(data);
+                                res.render('../pages/days/days', { data: data });
+                            }
+                        });
+                    });
+                });
+            });
+        });
     }
     
 });
@@ -65,7 +91,7 @@ app.get('/goals', function (req, res) {
                         db.addTarget({ query: query }, req.session.tmp_email);
                         res.redirect('/goals');
                     } else {
-                        console.log(data);
+                        //console.log(data);
                         res.render('../pages/goals/goals', { data: data });
                     }
                     
@@ -92,9 +118,16 @@ app.post('/checkAuth', function (req, res) {
             if (result) {
                 req.session.tmp_email = email;
                 req.session.tmp_pass = pwd;
-                console.log("authChecked OK! COOKIE CREATED!");
-                console.log(req.session.tmp_email + "      " + email);
-                res.redirect('/goals');
+                db.readUserGroup(email).then(function (rez) {
+                
+                    req.session.group = rez;
+                    //console.log('######################req.session.group:' + req.session.group);
+                
+                
+                    console.log("authChecked OK! COOKIE CREATED!");
+                    //console.log(req.session.tmp_email + "      " + email);
+                    res.redirect('/goals');
+                    });
             } else {
                 res.render('../pages/login/login', { data: 1 });
             }
@@ -119,7 +152,12 @@ app.post('/checkAuth', function (req, res) {
     }
     
 });
-
+app.get('/analytics', function (req, res) {
+    res.render('../pages/soon/soon', { req: req });
+});
+app.get('/profile', function (req, res) {
+    res.render('../pages/soon/soon', { req: req });
+});
 /*
 //functionalities
 app.get("/", page.index.send_page);
