@@ -4,7 +4,7 @@
   "description": "365 days",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "mysql": "^2.15.0",
     "node-mysql": "^0.4.2",
     "session": "^0.1.0",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "uuid": "^3.1.0"
   }
 }

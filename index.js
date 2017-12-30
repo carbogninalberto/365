@@ -1,6 +1,7 @@
 var db = require(__dirname + "/db/db_connection.js");
 var sessions = require("client-sessions");
 var qs = require('qs');
+var url = require('url');
 
 //dynamic pages
 var express = require("express");
@@ -47,7 +48,35 @@ app.get('/goals', function (req, res) {
     if ((req.session.tmp_email == undefined) && (req.session.tmp_pass == undefined)) {
         res.render('../pages/login/login');
     } else {
-        res.render('../pages/goals/goals');
+        var query = qs.parse(url.parse(req.url).query);
+        var data;
+
+        db.getTarget('year', req.session.tmp_email).then(function (year) {
+            db.getTarget('secondary', req.session.tmp_email).then(function (secondary) {
+                db.getTarget('book', req.session.tmp_email).then(function (books) {
+                    
+                    data = {
+                        year: year,
+                        secondary: secondary,
+                        books: books,
+                        query: query
+                    }
+                    if (query.type != undefined) {
+                        db.addTarget({ query: query }, req.session.tmp_email);
+                        res.redirect('/goals');
+                    } else {
+                        console.log(data);
+                        res.render('../pages/goals/goals', { data: data });
+                    }
+                    
+
+                });
+            });
+        });
+            
+       
+        
+        
     }
     
 });
@@ -65,7 +94,7 @@ app.post('/checkAuth', function (req, res) {
                 req.session.tmp_pass = pwd;
                 console.log("authChecked OK! COOKIE CREATED!");
                 console.log(req.session.tmp_email + "      " + email);
-                res.render('../pages/goals/goals', { data: 1 });
+                res.redirect('/goals');
             } else {
                 res.render('../pages/login/login', { data: 1 });
             }
@@ -77,7 +106,7 @@ app.post('/checkAuth', function (req, res) {
         db.login(email, pwd).then(function (result) {
             if (result) {
                 console.log("authChecked OK!");
-                res.render('../pages/goals/goals', { data: 1 });
+                res.redirect('/goals');
             } else {
                 req.session.tmp_email = undefined;
                 req.session.tmp_pass = undefined;
