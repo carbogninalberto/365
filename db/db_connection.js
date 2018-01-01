@@ -133,7 +133,7 @@ exports.joinedTarget = function joinedTarget(email) {
 exports.joinedFlow = function joinedFlow(group, email) {
     return new Promise(function (resolve, reject) {
         //SELECT * FROM flows LEFT JOIN obiettivi ON flows.id_goal = obiettivi.id
-        con.query("SELECT flows.*, obiettivi.*, output.unita FROM flows INNER JOIN obiettivi ON flows.id_goal = obiettivi.id INNER JOIN users ON users.group_name = flows.group_name AND users.email = flows.email INNER JOIN output ON output.id = flows.id_goal WHERE flows.group_name= '" + group + "'", function (err, result, fields) {
+        con.query("SELECT flows.*, obiettivi.*, users.*, output.unita FROM flows INNER JOIN obiettivi ON flows.id_goal = obiettivi.id INNER JOIN users ON users.group_name = flows.group_name AND users.email = flows.email INNER JOIN output ON output.id = flows.id_goal WHERE flows.group_name= '" + group + "'", function (err, result, fields) {
             if (err) throw err;
             console.log("retrive Joined Flows!");
             //console.log(result);
