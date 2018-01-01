@@ -133,7 +133,7 @@ exports.joinedTarget = function joinedTarget(email) {
 exports.joinedFlow = function joinedFlow(group, email) {
     return new Promise(function (resolve, reject) {
         //SELECT * FROM flows LEFT JOIN obiettivi ON flows.id_goal = obiettivi.id
-        con.query("SELECT * FROM flows INNER JOIN obiettivi ON flows.id_goal = obiettivi.id INNER JOIN users ON users.group_name = flows.group_name AND users.email = flows.email INNER JOIN output ON output.id = flows.id_goal WHERE flows.group_name= '" + group + "'", function (err, result, fields) {
+        con.query("SELECT flows.*, obiettivi.*, output.unita FROM flows INNER JOIN obiettivi ON flows.id_goal = obiettivi.id INNER JOIN users ON users.group_name = flows.group_name AND users.email = flows.email INNER JOIN output ON output.id = flows.id_goal WHERE flows.group_name= '" + group + "'", function (err, result, fields) {
             if (err) throw err;
             console.log("retrive Joined Flows!");
             //console.log(result);
@@ -150,11 +150,14 @@ exports.insertFlow = function insertFlow(query, email) {
     //console.log(group);
     query = query.query;
     //console.log(query);
-
+    var note = query.note;
+    note = note.replace("'", "''");
+    note = note.replace("(", "((");
+    note = note.replace(")", "))");
     return new Promise(function (resolve, reject) {
         //WHERE email='" + email + "' AND tipo=" + type + ");
         //INSERT INTO `flows`(`id`, `id_goal`, `titolo`, `completato`, `quantita`, `contenuto`, `commenti`, `datetime`, `email`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9])
-        con.query("INSERT INTO flows(id, id_goal, completato, quantita, contenuto, email, group_name) VALUES ('" + targetID + "','" + query.goal + "','" + query.answer + "','" + query.quantita + "','" + query.note.toString() + "','" + email + "','" + group +"')", function (err, result, fields) {
+        con.query("INSERT INTO flows(id, id_goal, completato, quantita, contenuto, email, group_name) VALUES ('" + targetID + "','" + query.goal + "','" + query.answer + "','" + query.quantita + "','" + note + "','" + email + "','" + group +"')", function (err, result, fields) {
             if (err) throw err;
             console.log("flows TABLE UPDATED!");
             //console.log(result);
