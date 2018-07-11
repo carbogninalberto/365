@@ -25,7 +25,7 @@ app.use(sessions({
 }));
 
 
-db.login('carbogninalberto@live.com', 'milanister03');
+db.login('', '');
 
 //http
 var http = require("http");
